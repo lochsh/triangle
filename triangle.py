@@ -1,6 +1,3 @@
-import itertools
-
-
 def is_triangle(a, b, c):
     """Given three line lengths, can these lines form a valid triangle?"""
     if any(type(item) not in (float, int) for item in [a, b, c]):
@@ -19,13 +16,10 @@ def triangle_inequality(lengths):
         * less than the sum of the lengths of the other two sides
         * greater than the difference of the lengths of the other two sides
     """
-    i = itertools.cycle([0, 1, 2])
-    j = itertools.cycle([1, 2, 0])
-    k = itertools.cycle([2, 0, 1])
-
     def inequality_holds():
+        a, b, c = lengths
         for _ in range(3):
-            a, b, c = lengths[next(i)], lengths[next(j)], lengths[next(k)]
             yield True if a < (b + c) and a > abs(b - c) else False
+            a, b, c = b, c, a
 
     return all(inequality_holds())
