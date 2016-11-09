@@ -31,9 +31,12 @@ def test_if_any_zeros_length_return_false(lst):
 @given(st.lists(st.integers(), max_size=3, min_size=3))
 def test_triangle_inequality(lst):
     """
-    the length of a side of a triangle is less than the sum of the lengths of
-    the other two sides and greater than the difference of the lengths of the
-    other two sides"""
+    Lengths of a side of a triangle must satisfy the triangle inequality.
+
+    The length of a side of a triangle is both:
+        * less than the sum of the lengths of the other two sides
+        * greater than the difference of the lengths of the other two sides
+    """
     i = itertools.cycle([0, 1, 2])
     j = itertools.cycle([1, 2, 0])
     k = itertools.cycle([2, 0, 1])
