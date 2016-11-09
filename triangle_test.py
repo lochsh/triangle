@@ -14,12 +14,17 @@ def at_least_one_zero(lst):
     return lst
 
 
-@given(st.floats())
-@given(st.floats())
-@given(st.floats(max_value=-1))
-def test_if_negative_length_return_false(a, b, c):
+def at_least_one_neg(lst):
+    """If a list has no negative elements, make one of them negative"""
+    if not any(item < 0 for item in lst):
+        lst[random.randint(0, len(lst) - 1)] *= -1
+    return lst
+
+
+@given(st.lists(st.floats(), max_size=3, min_size=3).map(at_least_one_neg))
+def test_if_negative_length_return_false(lengths):
     """If one or more of the three lengths are negative, can't be a triangle"""
-    assert triangle.is_triangle(a, b, c) is False
+    assert triangle.is_triangle(*lengths) is False
 
 
 @given(st.lists(st.floats(), max_size=3, min_size=3).map(at_least_one_zero))
