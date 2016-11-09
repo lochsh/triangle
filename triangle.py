@@ -26,6 +26,6 @@ def triangle_inequality(lengths):
     def inequality_holds():
         for _ in range(3):
             a, b, c = lengths[next(i)], lengths[next(j)], lengths[next(k)]
-            yield True if a < (b + c) and a > (b - c) else False
+            yield True if a < (b + c) and a > abs(b - c) else False
 
     return all(inequality_holds())
