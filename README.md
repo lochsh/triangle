@@ -1,7 +1,5 @@
 # Given the lengths of three lines, can they make a valid triangle?
 
-Currently implemented to check for integers only.
-
 ## Instructions for creating development environment:
 
 * Create a virtual environment
