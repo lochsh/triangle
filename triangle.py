@@ -3,6 +3,9 @@ import itertools
 
 def is_triangle(a, b, c):
     """Given three line lengths, can these lines form a valid triangle?"""
+    if any(type(item) not in (float, int) for item in [a, b, c]):
+        raise ValueError('Inputs must be numbers')
+
     if any(item <= 0 for item in [a, b, c]):
         return False
     return triangle_inequality([a, b, c])
