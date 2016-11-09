@@ -8,7 +8,7 @@ def is_triangle(a, b, c):
     return triangle_inequality([a, b, c])
 
 
-def triangle_inequality(lst):
+def triangle_inequality(lengths):
     """
     Lengths of a side of a triangle must satisfy the triangle inequality.
 
@@ -22,7 +22,7 @@ def triangle_inequality(lst):
 
     def inequality_holds():
         for _ in range(3):
-            a, b, c = lst[next(i)], lst[next(j)], lst[next(k)]
+            a, b, c = lengths[next(i)], lengths[next(j)], lengths[next(k)]
             yield True if a < (b + c) and a > (b - c) else False
 
     return all(inequality_holds())

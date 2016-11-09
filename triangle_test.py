@@ -14,22 +14,22 @@ def at_least_one_zero(lst):
     return lst
 
 
-@given(st.integers())
-@given(st.integers())
-@given(st.integers(max_value=-1))
+@given(st.floats())
+@given(st.floats())
+@given(st.floats(max_value=-1))
 def test_if_negative_length_return_false(a, b, c):
     """If one or more of the three lengths are negative, can't be a triangle"""
     assert triangle.is_triangle(a, b, c) is False
 
 
-@given(st.lists(st.integers(), max_size=3, min_size=3).map(at_least_one_zero))
-def test_if_any_zeros_length_return_false(lst):
+@given(st.lists(st.floats(), max_size=3, min_size=3).map(at_least_one_zero))
+def test_if_any_zeros_length_return_false(lengths):
     """If one or more of the three lengths are zero, can't be a triangle"""
-    assert triangle.is_triangle(*lst) is False
+    assert triangle.is_triangle(*lengths) is False
 
 
-@given(st.lists(st.integers(), max_size=3, min_size=3))
-def test_triangle_inequality(lst):
+@given(st.lists(st.floats(), max_size=3, min_size=3))
+def test_triangle_inequality(lengths):
     """
     Lengths of a side of a triangle must satisfy the triangle inequality.
 
@@ -43,7 +43,7 @@ def test_triangle_inequality(lst):
 
     def inequality_holds():
         for _ in range(3):
-            a, b, c = lst[next(i)], lst[next(j)], lst[next(k)]
+            a, b, c = lengths[next(i)], lengths[next(j)], lengths[next(k)]
             yield True if a < (b + c) and a > (b - c) else False
 
-    assert all(inequality_holds()) == triangle.triangle_inequality(lst)
+    assert all(inequality_holds()) == triangle.triangle_inequality(lengths)
