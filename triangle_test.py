@@ -6,6 +6,7 @@ import triangle
 
 
 def at_least_one_zero(lst):
+    """If a list has no zero elements, make one of them zero"""
     if not any(item == 0 for item in lst):
         lst[random.randint(0, len(lst) - 1)] = 0
     return lst
