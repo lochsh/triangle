@@ -31,7 +31,7 @@ def test_if_any_zeros_length_return_false(lengths):
 @given(st.lists(st.floats(), max_size=3, min_size=3))
 def test_triangle_inequality(lengths):
     """
-    Lengths of a side of a triangle must satisfy the triangle inequality.
+    The lengths of a triangle's sides  must satisfy the triangle inequality.
 
     The length of a side of a triangle is both:
         * less than the sum of the lengths of the other two sides

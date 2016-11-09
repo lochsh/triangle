@@ -4,7 +4,7 @@ import itertools
 def is_triangle(a, b, c):
     """Given three line lengths, can these lines form a valid triangle?"""
     if any(type(item) not in (float, int) for item in [a, b, c]):
-        raise ValueError('Inputs must be numbers')
+        raise TypeError('Inputs must be real numbers')
 
     if any(item <= 0 for item in [a, b, c]):
         return False
@@ -13,7 +13,7 @@ def is_triangle(a, b, c):
 
 def triangle_inequality(lengths):
     """
-    Lengths of a side of a triangle must satisfy the triangle inequality.
+    The lengths of a triangle's sides  must satisfy the triangle inequality.
 
     The length of a side of a triangle is both:
         * less than the sum of the lengths of the other two sides
