@@ -16,10 +16,4 @@ def triangle_inequality(lengths):
         * less than the sum of the lengths of the other two sides
         * greater than the difference of the lengths of the other two sides
     """
-    def inequality_holds():
-        a, b, c = lengths
-        for _ in range(3):
-            yield True if a < (b + c) and a > abs(b - c) else False
-            a, b, c = b, c, a
-
-    return all(inequality_holds())
+    return 2 * max(lengths) < sum(lengths)
