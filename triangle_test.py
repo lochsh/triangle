@@ -3,6 +3,7 @@ import random
 
 from hypothesis import given
 from hypothesis import strategies as st
+import pytest
 
 import triangle
 
@@ -52,6 +53,12 @@ def test_triangle_inequality(lengths):
             yield True if a < (b + c) and a > abs(b - c) else False
 
     assert all(inequality_holds()) == triangle.triangle_inequality(lengths)
+
+
+@given(st.lists(st.one_of(st.booleans(), st.none(), st.text()), 3, 3))
+def test_bad_type_input(lst):
+    with pytest.raises(TypeError):
+        triangle.is_triangle(*lst)
 
 
 # Sanity check example-based tests
