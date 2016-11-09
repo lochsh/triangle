@@ -9,11 +9,11 @@ Currently implemented to check for integers only.
 
 E.g.:
 
-* `virtualenv venv`
-* `source ./venv/bin/activate` in bash or `activate` in fish
-* `pip install -r requirements.txt`
+* `$ virtualenv venv`
+* `$ source ./venv/bin/activate` in bash or `$ activate` in fish
+* `$ pip install -r requirements.txt`
 
 ## To run tests:
-* `py.test triangle_test.py`
+* `$ py.test triangle_test.py`
 
 The previously run hypothesis tests are in .hypothesis/examples
