@@ -22,13 +22,13 @@ def at_least_one_neg(lst):
 
 
 @given(st.lists(st.floats(), max_size=3, min_size=3).map(at_least_one_neg))
-def test_if_negative_length_return_false(lengths):
+def test_if_negative_lengths_return_false(lengths):
     """If one or more of the three lengths are negative, can't be a triangle"""
     assert triangle.is_triangle(*lengths) is False
 
 
 @given(st.lists(st.floats(), max_size=3, min_size=3).map(at_least_one_zero))
-def test_if_any_zeros_length_return_false(lengths):
+def test_if_any_zero_lengths_return_false(lengths):
     """If one or more of the three lengths are zero, can't be a triangle"""
     assert triangle.is_triangle(*lengths) is False
 
