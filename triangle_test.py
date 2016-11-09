@@ -52,3 +52,20 @@ def test_triangle_inequality(lengths):
             yield True if a < (b + c) and a > abs(b - c) else False
 
     assert all(inequality_holds()) == triangle.triangle_inequality(lengths)
+
+
+# Sanity check example-based tests
+def test_345():
+    assert triangle.is_triangle(3, 4, 5)
+
+
+def test_all_zeros():
+    assert triangle.is_triangle(0, 0, 0) is False
+
+
+def test_negative_example():
+    assert triangle.is_triangle(-5, 0.9, 100) is False
+
+
+def test_equilateral():
+    assert triangle.is_triangle(1, 1, 1)
