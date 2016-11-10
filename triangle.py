@@ -9,8 +9,5 @@ def is_triangle(a, b, c):
 
     This can be reduced to 2 * (longest length) < (sum of lengths)
     """
-    if any(type(item) not in (float, int) for item in [a, b, c]):
-        raise TypeError('Inputs must be real numbers')
-
     a, b, c = sorted([a, b, c])
     return True if a < (b + c) and a > abs(b - c) else False
