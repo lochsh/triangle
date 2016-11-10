@@ -1,3 +1,4 @@
+import math
 import random
 
 from hypothesis import given
@@ -5,6 +6,8 @@ from hypothesis import strategies as st
 import pytest
 
 import triangle
+
+length_3 = {'max_size': 3, 'min_size': 3}
 
 
 def at_least_one_zero(lst):
@@ -14,44 +17,64 @@ def at_least_one_zero(lst):
     return lst
 
 
-def at_least_one_neg(lst):
+def at_least_one_negative(lst):
     """If a list has no negative elements, make one of them negative"""
     if not any(item < 0 for item in lst):
         lst[random.randint(0, len(lst) - 1)] *= -1
     return lst
 
 
-@given(st.lists(st.floats(), max_size=3, min_size=3).map(at_least_one_neg))
+@given(st.lists(st.floats(), **length_3).map(at_least_one_negative))
 def test_if_negative_lengths_return_false(lengths):
     """If one or more of the three lengths are negative, can't be a triangle"""
     assert triangle.is_triangle(*lengths) is False
 
 
-@given(st.lists(st.floats(), max_size=3, min_size=3).map(at_least_one_zero))
+@given(st.lists(st.floats(), **length_3).map(at_least_one_zero))
 def test_if_any_zero_lengths_return_false(lengths):
     """If one or more of the three lengths are zero, can't be a triangle"""
     assert triangle.is_triangle(*lengths) is False
 
 
-@given(st.lists(st.floats(), max_size=3, min_size=3))
-def test_triangle_inequality(lengths):
-    """
-    The lengths of a triangle's sides  must satisfy the triangle inequality.
+@given(st.integers(9, 10e6).map(lambda x: (x - 1 + int(x % 2))))
+def test_pythagorean_triples(a_sq):
+    b_sq = ((a_sq - 1)/2)**2
+    c_sq = b_sq + a_sq
+    assert triangle.is_triangle(*[math.sqrt(i) for i in [a_sq, b_sq, c_sq]])
 
-    The length of a side of a triangle is both:
-        * less than the sum of the lengths of the other two sides
-        * greater than the difference of the lengths of the other two sides
-    """
-    def inequality_holds():
+
+def machine_precision_check(lengths):
+    _, b, c = sorted(lengths)
+    if abs(math.log10(max(lengths) / min(lengths))) > 7:
+        lengths[lengths.index(c)] *= b
+    return lengths
+
+
+@given(st.lists(st.floats(min_value=0.1, max_value=1e100),
+                **length_3).map(machine_precision_check))
+def test_lengths_from_valid_angles(lengths):
+
+    def angles():
         a, b, c = lengths
         for _ in range(3):
-            yield True if a < (b + c) and a > abs(b - c) else False
+            yield math.acos((a**2 + b**2 - c**2) / (2*a*b))
             a, b, c = b, c, a
 
-    assert all(inequality_holds()) == triangle.is_triangle(*lengths)
+    def valid_angles():
+        try:
+            positive = True if not any(i <= 0 for i in angles()) else False
+            sum_to_pi = math.isclose(sum(angles()), math.pi, rel_tol=1e-7)
+            return positive and sum_to_pi
+        except (ValueError, OverflowError):
+            return False
+
+    assert triangle.is_triangle(*lengths) == valid_angles()
 
 
-@given(st.lists(st.one_of(st.booleans(), st.none(), st.text()), 3, 3))
+bad_types = [st.booleans(), st.none(), st.text(), st.complex_numbers()]
+
+
+@given(st.lists(st.one_of(bad_types), **length_3))
 def test_bad_type_input(lst):
     with pytest.raises(TypeError):
         triangle.is_triangle(*lst)
