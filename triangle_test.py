@@ -48,7 +48,7 @@ def test_triangle_inequality(lengths):
             yield True if a < (b + c) and a > abs(b - c) else False
             a, b, c = b, c, a
 
-    assert all(inequality_holds()) == triangle.triangle_inequality(lengths)
+    assert all(inequality_holds()) == triangle.is_triangle(*lengths)
 
 
 @given(st.lists(st.one_of(st.booleans(), st.none(), st.text()), 3, 3))
