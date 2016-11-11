@@ -6,4 +6,5 @@ def is_triangle(a, b, c):
     lengths of the other two sides.  We can reduce this to the following for
     lengths a, b, c: b + c > a > abs(b - c)
     """
+    a, b, c = sorted([a, b, c])
     return True if a < (b + c) and a > abs(b - c) else False

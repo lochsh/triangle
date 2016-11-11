@@ -71,6 +71,14 @@ def test_lengths_from_valid_angles(lengths):
     assert triangle.is_triangle(*lengths) == valid_angles()
 
 
+def test_machine_precision_large():
+    assert triangle.is_triangle(1e100, 0.1, 1e100)
+
+
+def test_machine_precision_small():
+    assert triangle.is_triangle(1e-100, 1e-150, 1e-100)
+
+
 bad_types = [st.none(), st.complex_numbers()]
 
 
