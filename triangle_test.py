@@ -71,7 +71,7 @@ def test_lengths_from_valid_angles(lengths):
     assert triangle.is_triangle(*lengths) == valid_angles()
 
 
-bad_types = [st.none(), st.text(), st.complex_numbers()]
+bad_types = [st.none(), st.complex_numbers()]
 
 
 @given(st.lists(st.one_of(bad_types), **length_3))
