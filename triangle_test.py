@@ -91,8 +91,12 @@ def test_all_zeros():
     assert triangle.is_triangle(0, 0, 0) is False
 
 
-def test_negative_example():
+def test_one_negative():
     assert triangle.is_triangle(-5, 0.9, 100) is False
+
+
+def test_negative_equilateral():
+    assert triangle.is_triangle(-1, -1, -1) is False
 
 
 def test_equilateral():
