@@ -25,14 +25,12 @@ def at_least_one_negative(lst):
 
 
 @given(st.lists(st.floats(), **length_3).map(at_least_one_negative))
-def test_if_negative_lengths_return_false(lengths):
-    """If one or more of the three lengths are negative, can't be a triangle"""
+def test_negative_lengths_return_false(lengths):
     assert triangle.is_triangle(*lengths) is False
 
 
 @given(st.lists(st.floats(), **length_3).map(at_least_one_zero))
-def test_if_any_zero_lengths_return_false(lengths):
-    """If one or more of the three lengths are zero, can't be a triangle"""
+def test_zero_lengths_return_false(lengths):
     assert triangle.is_triangle(*lengths) is False
 
 
@@ -43,7 +41,7 @@ def test_pythagorean_triples(a_sq):
     assert triangle.is_triangle(*[math.sqrt(i) for i in [a_sq, b_sq, c_sq]])
 
 
-def machine_precision_check(lengths):
+def machine_precision_insurance(lengths):
     a, _, c = sorted(lengths)
     if abs(math.log10(c / a)) > 7:
         lengths[lengths.index(c)] *= a
@@ -51,7 +49,7 @@ def machine_precision_check(lengths):
 
 
 @given(st.lists(st.floats(min_value=0.1, max_value=1e100),
-                **length_3).map(machine_precision_check))
+                **length_3).map(machine_precision_insurance))
 def test_lengths_from_valid_angles(lengths):
 
     def angles():
@@ -79,16 +77,12 @@ def test_machine_precision_small():
     assert triangle.is_triangle(1e-100, 1e-150, 1e-100)
 
 
-bad_types = [st.none(), st.complex_numbers()]
-
-
-@given(st.lists(st.one_of(bad_types), **length_3))
+@given(st.lists(st.one_of(st.none(), st.complex_numbers()), **length_3))
 def test_bad_type_input(lst):
     with pytest.raises(TypeError):
         triangle.is_triangle(*lst)
 
 
-# Sanity check example-based tests
 def test_345():
     assert triangle.is_triangle(3, 4, 5)
 
