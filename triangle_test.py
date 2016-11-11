@@ -44,9 +44,9 @@ def test_pythagorean_triples(a_sq):
 
 
 def machine_precision_check(lengths):
-    _, b, c = sorted(lengths)
-    if abs(math.log10(max(lengths) / min(lengths))) > 7:
-        lengths[lengths.index(c)] *= b
+    a, _, c = sorted(lengths)
+    if abs(math.log10(c / a)) > 7:
+        lengths[lengths.index(c)] *= a
     return lengths
 
 
