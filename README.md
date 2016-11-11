@@ -2,12 +2,12 @@
 
 ## Instructions for creating development environment:
 
-* Create a virtual environment
+* Create a virtual environment with a Python 3.5+ interpreter
 * Install requirements using `pip`
 
 E.g.:
 
-* `$ virtualenv venv`
+* `$ virtualenv venv -ppython3.5`
 * `$ source ./venv/bin/activate` in bash or `$ activate` in fish
 * `$ pip install -r requirements.txt`
 

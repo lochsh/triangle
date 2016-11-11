@@ -77,7 +77,8 @@ def test_machine_precision_small():
     assert triangle.is_triangle(1e-100, 1e-150, 1e-100)
 
 
-@given(st.lists(st.one_of(st.none(), st.complex_numbers()), **length_3))
+@given(st.lists(st.one_of(st.none(), st.complex_numbers(), st.text()),
+                **length_3))
 def test_bad_type_input(lst):
     with pytest.raises(TypeError):
         triangle.is_triangle(*lst)
